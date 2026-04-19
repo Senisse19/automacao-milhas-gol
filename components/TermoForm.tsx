@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { generateTermo, TermoData } from "@/lib/generateDocx";
-import { buildPdfHtml } from "@/lib/buildPdfHtml";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ptBR } from "date-fns/locale";
@@ -136,8 +135,10 @@ export default function TermoForm() {
         : "";
       const dataToGenerate: TermoData = {
         ...formData,
-        CPF_CLIENTE: unmaskCpf(formData.CPF_CLIENTE),
-        CPF_SMILES: unmaskCpf(formData.CPF_SMILES),
+        // Mantemos a formatação visual (máscara) para o documento oficial
+        CPF_CLIENTE: formData.CPF_CLIENTE,
+        CPF_SMILES: formData.CPF_SMILES,
+        CEP: formData.CEP,
         DATA_EXTENSO: dataAtualPorExtenso(isoDate),
       };
 
@@ -152,87 +153,6 @@ export default function TermoForm() {
     }
   };
 
-  const handleGeneratePdf = async () => {
-    setSuccessMsg("");
-    if (!validate()) {
-      alert("Por favor, preencha todos os campos corretamente. Verifique os avisos em vermelho no formulário.");
-      return;
-    }
-    setIsGenerating(true);
-
-    try {
-      const isoDate2 = selectedDate
-        ? `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`
-        : "";
-
-      // Monta os dados do formulário com formatação final
-      const dataToGenerate: TermoData = {
-        ...formData,
-        CPF_CLIENTE: unmaskCpf(formData.CPF_CLIENTE),
-        CPF_SMILES: unmaskCpf(formData.CPF_SMILES),
-        DATA_EXTENSO: dataAtualPorExtenso(isoDate2),
-      };
-
-      // Carrega a logo GOL como base64 para embed no HTML (sem dependência de servidor)
-      const logoResp = await fetch("/logo.png");
-      const logoBlob = await logoResp.blob();
-      const logoBase64 = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.readAsDataURL(logoBlob);
-      });
-
-      // Gera o HTML do documento idêntico ao layout do DOCX
-      const htmlContent = buildPdfHtml(dataToGenerate, logoBase64);
-
-      // Insere o HTML renderizado no DOM principal para impressão
-      // (position:absolute abaixo do viewport = layout calculado, mas invisível ao usuário)
-      const printDiv = document.createElement("div");
-      printDiv.id = "__pdf_target__";
-      printDiv.style.cssText = "position:absolute;top:9999px;left:0;width:100%;background:white;";
-      printDiv.innerHTML = htmlContent;
-      document.body.appendChild(printDiv);
-
-      // Injeta estilo de impressão: esconde TUDO exceto o documento
-      const printStyle = document.createElement("style");
-      printStyle.id = "__pdf_style__";
-      printStyle.textContent = `
-        @media print {
-          @page { size: A4 portrait; margin: 0; }
-          body > *:not(#__pdf_target__) { display: none !important; }
-          #__pdf_target__ {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            background: white !important;
-            display: block !important;
-          }
-        }
-      `;
-      document.head.appendChild(printStyle);
-
-      // Pequena espera para garantir que a logo carregou antes de imprimir
-      await new Promise<void>((resolve) => setTimeout(resolve, 400));
-      window.print();
-
-      // Limpeza após o diálogo de impressão fechar
-      const cleanup = () => {
-        document.getElementById("__pdf_target__")?.remove();
-        document.getElementById("__pdf_style__")?.remove();
-      };
-      window.addEventListener("afterprint", cleanup, { once: true });
-      setTimeout(cleanup, 15000); // safety fallback
-
-      setSuccessMsg("Janela de impressão aberta. Salve como PDF no diálogo do browser.");
-    } catch (error) {
-      console.error(error);
-      const errorMessage = error instanceof Error ? error.message : "Erro desconhecido.";
-      alert(`Ocorreu um erro: ${errorMessage}`);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
 
   const handleClear = () => {
     setFormData({
@@ -382,17 +302,6 @@ export default function TermoForm() {
               `}
             >
               Gerar DOCX
-            </button>
-            <button
-              type="button"
-              onClick={handleGeneratePdf}
-              disabled={isGenerating}
-              className={`
-                ${isGenerating ? 'bg-gol-gray cursor-not-allowed' : 'bg-gol-dark hover:bg-gray-800 shadow-md hover:shadow-lg cursor-pointer'}
-                text-white px-8 py-4 rounded-full font-bold transition-all text-sm uppercase tracking-wide w-full sm:w-auto
-              `}
-            >
-              Baixar PDF
             </button>
           </div>
           

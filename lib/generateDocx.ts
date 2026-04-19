@@ -36,7 +36,24 @@ export async function buildTermoBlob(data: TermoData): Promise<Blob> {
     linebreaks: true,
   });
 
-  doc.render(data);
+  // Cria uma cópia dos dados para normalização de tags
+  // Isso garante que {NOME_CLIENTE}, {nome_cliente} e {nomecliente} funcionem
+  const normalizedData: any = { ...data };
+  Object.keys(data).forEach((key) => {
+    const val = (data as any)[key];
+    normalizedData[key.toLowerCase()] = val;
+    normalizedData[key.replace(/_/g, "")] = val;
+    normalizedData[key.toLowerCase().replace(/_/g, "")] = val;
+  });
+
+  console.log("Dados normalizados enviados para o DOCX:", normalizedData);
+  
+  try {
+    doc.render(normalizedData);
+  } catch (error) {
+    console.error("Erro ao renderizar DOCX:", error);
+    throw error;
+  }
 
   return doc.getZip().generate({
     type: "blob",
