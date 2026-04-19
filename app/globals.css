@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-gol-dark: #3A332F;
+  --color-gol-dark: #333333;
   --color-gol-orange: #FF5A00;
-  --color-gol-light: #F9F8F6;
+  --color-gol-light: #F5F5F5;
   --color-gol-white: #FFFFFF;
-  --color-gol-gray: #8C8581;
+  --color-gol-gray: #666666;
+  --color-gol-border: #E0E0E0;
 }
 
 @layer base {
@@ -26,7 +27,7 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-montserrat), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

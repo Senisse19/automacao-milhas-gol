@@ -161,8 +161,8 @@ export default function TermoForm() {
   };
 
   const renderInputField = (label: string, name: keyof typeof formData, placeholder = "", helperText = "") => (
-    <div className="flex flex-col gap-1 mb-8 relative group">
-      <label htmlFor={name} className="text-[10px] font-bold text-gol-gray tracking-widest uppercase transition-colors group-focus-within:text-gol-orange">
+    <div className="flex flex-col gap-1.5 mb-6 relative group">
+      <label htmlFor={name} className="text-xs font-bold text-gol-dark uppercase tracking-wide group-focus-within:text-gol-orange transition-colors">
         {label}
       </label>
       <input
@@ -173,49 +173,56 @@ export default function TermoForm() {
         onChange={handleChange}
         placeholder={placeholder}
         style={{ textTransform: "uppercase" }}
-        className={`bg-transparent border-b-2 ${errors[name] ? 'border-red-500' : 'border-gol-dark/20'} text-gol-dark py-2 outline-none focus:border-gol-orange transition-all font-medium placeholder:text-gol-dark/20`}
+        className={`bg-white border ${errors[name] ? 'border-red-500 ring-1 ring-red-500' : 'border-gol-border'} rounded-lg text-gol-dark px-4 py-3 outline-none focus:border-gol-orange focus:ring-1 focus:ring-gol-orange transition-all font-medium placeholder:text-gol-gray/50 shadow-sm`}
       />
-      {helperText && <span className="text-[11px] text-gol-gray mt-2 leading-tight">{helperText}</span>}
-      {errors[name] && <span className="text-[11px] text-red-500 mt-1 font-bold absolute -bottom-5 left-0">{errors[name]}</span>}
+      {helperText && <span className="text-xs text-gol-gray mt-1">{helperText}</span>}
+      {errors[name] && <span className="text-xs text-red-500 mt-1 font-bold absolute -bottom-5 left-0">{errors[name]}</span>}
     </div>
   );
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl">
+    <form onSubmit={handleSubmit} className="w-full">
       
-      {/* CARD 1 */}
-      <div className="mb-16">
-        <h3 className="text-2xl text-gol-dark font-normal mb-8 pb-4 border-b-2 border-gol-dark flex items-baseline gap-4">
-          <span className="text-gol-orange font-bold text-lg">01</span>
-          Signatário e Caso
-        </h3>
+      {/* SECTION 1 */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-6 pb-3 border-b border-gol-border">
+          <div className="bg-gol-orange text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+            1
+          </div>
+          <h3 className="text-xl text-gol-dark font-bold">Signatário e Caso</h3>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
           {renderInputField("Código Localizador", "CODIGO_LOCALIZADOR", "Ex: SISBSU")}
           {renderInputField("Relatório de Dano de Bagagem", "RELATORIO_DANO", "Ex: POAG360019")}
           {renderInputField("Nome do Cliente (Signatário)", "NOME_CLIENTE", "", "Pessoa que irá assinar o documento.")}
           {renderInputField("CPF do Cliente", "CPF_CLIENTE", "000.000.000-00")}
           <div className="md:col-span-2">
-            {renderInputField("Endereço", "ENDERECO", "RUA PADRE CHAGAS, 100")}
+            {renderInputField("Endereço", "ENDERECO", "RUA CEL. BORDINI, 100")}
           </div>
-          {renderInputField("Bairro", "BAIRRO", "MOINHOS DE VENTO")}
-          {renderInputField("CEP", "CEP", "90570-080")}
+          {renderInputField("Bairro", "BAIRRO", "BELA VISTA")}
+          {renderInputField("CEP", "CEP", "90440-000")}
           {renderInputField("Cidade/UF", "CIDADE_UF", "PORTO ALEGRE/RS")}
         </div>
       </div>
 
-      {/* CARD 2 */}
-      <div className="mb-16">
-        <h3 className="text-2xl text-gol-dark font-normal mb-8 pb-4 border-b-2 border-gol-dark flex items-baseline gap-4">
-          <span className="text-gol-orange font-bold text-lg">02</span>
-          Beneficiário (Smiles)
-        </h3>
+      {/* SECTION 2 */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-6 pb-3 border-b border-gol-border">
+          <div className="bg-gol-orange text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+            2
+          </div>
+          <h3 className="text-xl text-gol-dark font-bold">Beneficiário (Smiles)</h3>
+        </div>
         
-        <div className="bg-gol-light p-6 mb-8 border-l-4 border-gol-orange text-sm text-gol-dark">
-          <strong>Atenção:</strong> A pessoa que recebe as milhas pode ser diferente de quem assina o termo. O CPF abaixo deve ser o vinculado à conta Smiles.
+        <div className="bg-gol-light p-5 rounded-xl mb-6 border border-gol-border text-sm text-gol-dark flex items-start gap-4">
+          <div className="text-gol-orange text-xl shrink-0 mt-0.5">ℹ️</div>
+          <p>
+            <strong>Atenção:</strong> A pessoa que recebe as milhas pode ser diferente de quem assina o termo. O CPF abaixo deve ser o vinculado à conta Smiles.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
           {renderInputField("Nome do Recebedor de Milhas", "NOME_RECEBEDOR", "", "Titular da conta Smiles.")}
           {renderInputField("Número Smiles", "NUMERO_SMILES", "123456789")}
           {renderInputField("Valor (Milhas)", "QUANTIDADE_MILHAS", "25.000")}
@@ -223,43 +230,45 @@ export default function TermoForm() {
         </div>
       </div>
 
-      {/* CARD 3 - DATA */}
-      <div className="mb-16">
-        <h3 className="text-2xl text-gol-dark font-normal mb-8 pb-4 border-b-2 border-gol-dark flex items-baseline gap-4">
-          <span className="text-gol-gray font-bold text-lg">03</span>
-          Data do Documento
-        </h3>
+      {/* SECTION 3 */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-6 pb-3 border-b border-gol-border">
+          <div className="bg-gol-gray text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
+            3
+          </div>
+          <h3 className="text-xl text-gol-dark font-bold">Data do Documento</h3>
+        </div>
         
-        <div className="max-w-xs">
+        <div className="max-w-md">
           {renderInputField("Data por Extenso", "DATA_EXTENSO")}
         </div>
       </div>
 
       {/* ACTIONS */}
-      <div className="flex flex-col sm:flex-row gap-6 items-center justify-between pt-8 border-t border-gol-dark/10">
+      <div className="flex flex-col sm:flex-row gap-6 items-center justify-between pt-8 border-t border-gol-border">
         <button
           type="button"
           onClick={handleClear}
-          className="text-gol-gray hover:text-gol-dark font-bold transition-colors text-xs uppercase tracking-widest cursor-pointer"
+          className="text-gol-gray hover:text-gol-dark font-semibold transition-colors text-sm uppercase tracking-wide cursor-pointer py-3 px-6 rounded-full hover:bg-gol-light"
         >
           Limpar Formulário
         </button>
         
-        <div className="w-full sm:w-auto flex flex-col items-end">
+        <div className="w-full sm:w-auto flex flex-col items-center sm:items-end">
           <button
             type="submit"
             disabled={isGenerating}
             className={`
-              ${isGenerating ? 'bg-gol-gray cursor-not-allowed' : 'bg-gol-orange hover:bg-gol-dark cursor-pointer'}
-              text-white px-12 py-5 font-bold transition-all text-sm uppercase tracking-widest w-full sm:w-auto
+              ${isGenerating ? 'bg-gol-gray cursor-not-allowed' : 'bg-gol-orange hover:bg-orange-600 shadow-md hover:shadow-lg cursor-pointer'}
+              text-white px-10 py-4 rounded-full font-bold transition-all text-sm uppercase tracking-wide w-full sm:w-auto
             `}
           >
-            {isGenerating ? "Gerando..." : "Gerar Documento"}
+            {isGenerating ? "Gerando Documento..." : "Gerar Documento .DOCX"}
           </button>
           
           {successMsg && (
-            <div className="text-green-600 text-xs font-bold uppercase tracking-widest mt-4">
-              {successMsg}
+            <div className="text-green-600 text-sm font-bold mt-4 bg-green-50 px-4 py-2 rounded-lg border border-green-200">
+              ✓ {successMsg}
             </div>
           )}
         </div>

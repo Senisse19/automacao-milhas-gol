@@ -2,47 +2,48 @@ import TermoForm from "@/components/TermoForm";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gol-white flex flex-col md:flex-row font-sans selection:bg-gol-orange selection:text-white">
-      {/* Editorial Left Panel - Inspired by Brand Guide */}
-      <div className="w-full md:w-[40%] min-h-[40vh] md:min-h-screen flex flex-col sticky top-0">
-        {/* Dark Top Section */}
-        <div className="bg-gol-dark flex-grow p-10 md:p-16 flex flex-col justify-between text-gol-white relative overflow-hidden">
-          <div className="relative z-10">
-            <h1 className="text-sm font-bold tracking-widest text-gol-orange uppercase mb-6">Automação Interna</h1>
-            <h2 className="text-5xl md:text-6xl font-normal leading-[1.1] tracking-tight">
-              Termo de<br />Quitação<br />de Milhas
-            </h2>
+    <main className="min-h-screen bg-gol-light font-sans selection:bg-gol-orange selection:text-white flex flex-col">
+      {/* GOL Header (Simulated) */}
+      <header className="bg-gol-white shadow-sm border-b border-gol-border sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-3xl font-extrabold tracking-tighter text-gol-orange">
+              GOL
+            </span>
+            <span className="text-gol-gray text-sm font-medium ml-4 hidden sm:block border-l border-gol-border pl-4">
+              Portal Interno
+            </span>
           </div>
-          
-          <div className="mt-20 relative z-10">
-            <p className="text-gol-gray text-sm max-w-xs leading-relaxed">
-              Sistema gerador de documentos padronizados para o setor de atendimento.
-            </p>
-          </div>
-          
-          {/* Abstract background element */}
-          <div className="text-[15rem] font-bold tracking-tighter text-white/5 absolute -bottom-16 -right-10 pointer-events-none select-none leading-none">
-            GOL
+          <div className="text-xs font-bold uppercase tracking-widest text-gol-gray">
+            Termo de Quitação
           </div>
         </div>
-        
-        {/* Orange Bottom Section */}
-        <div className="bg-gol-orange p-10 md:p-16 text-gol-white shrink-0">
-          <p className="text-lg md:text-xl font-medium leading-snug">
-            01. Preencha os dados.<br />
-            02. Valide as informações.<br />
-            03. Gere o documento.
-          </p>
-          <div className="mt-12 text-xs font-bold uppercase tracking-widest opacity-90 border-t border-white/20 pt-4">
-            Uso Restrito • Confidencial
-          </div>
-        </div>
-      </div>
+      </header>
 
-      {/* Right Panel - Form */}
-      <div className="w-full md:w-[60%] bg-gol-white p-8 md:p-16 lg:p-24 overflow-y-auto md:h-screen">
-        <TermoForm />
+      {/* Main Content Area */}
+      <div className="flex-1 w-full max-w-4xl mx-auto px-4 py-12 md:py-16">
+        {/* Title Section */}
+        <div className="mb-10 text-center md:text-left">
+          <h1 className="text-3xl md:text-4xl font-bold text-gol-dark mb-3">
+            Emissão de Termo de Quitação
+          </h1>
+          <p className="text-gol-gray text-base max-w-2xl">
+            Preencha os dados abaixo para gerar o documento padronizado em formato .docx.
+          </p>
+        </div>
+
+        {/* Card Form */}
+        <div className="bg-gol-white rounded-2xl shadow-lg border border-gol-border/50 p-6 md:p-10 lg:p-12">
+          <TermoForm />
+        </div>
       </div>
+      
+      {/* Footer */}
+      <footer className="bg-gol-white border-t border-gol-border py-8 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 text-center text-xs text-gol-gray">
+          &copy; {new Date().getFullYear()} GOL Linhas Aéreas Inteligentes. Uso Restrito e Confidencial.
+        </div>
+      </footer>
     </main>
   );
 }
