@@ -116,7 +116,10 @@ export default function TermoForm() {
     e.preventDefault();
     setSuccessMsg("");
 
-    if (!validate()) return;
+    if (!validate()) {
+      alert("Por favor, preencha todos os campos corretamente. Verifique os avisos em vermelho no formulário.");
+      return;
+    }
 
     setIsGenerating(true);
 
@@ -129,9 +132,9 @@ export default function TermoForm() {
 
       await generateTermo(dataToGenerate);
       setSuccessMsg("Documento gerado com sucesso.");
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Ocorreu um erro ao gerar o documento. Verifique o console.");
+      alert(`Ocorreu um erro: ${error.message || "Verifique o console."}`);
     } finally {
       setIsGenerating(false);
     }
