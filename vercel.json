@@ -1,5 +1,5 @@
 {
-  "buildCommand": "next build",
+  "buildCommand": "NODE_OPTIONS='--max_old_space_size=4096' next build",
   "outputDirectory": "out",
   "framework": "nextjs"
 }
