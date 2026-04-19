@@ -1,5 +1,7 @@
 import TermoForm from "@/components/TermoForm";
 
+import Image from "next/image";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gol-light font-sans selection:bg-gol-orange selection:text-white flex flex-col">
@@ -7,15 +9,13 @@ export default function Home() {
       <header className="bg-gol-white shadow-sm border-b border-gol-border sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-3xl font-extrabold tracking-tighter text-gol-orange">
-              GOL
-            </span>
+            <Image src="/gol-logo-0.png" alt="GOL Logo" width={160} height={64} className="object-contain h-16 w-auto" />
             <span className="text-gol-gray text-sm font-medium ml-4 hidden sm:block border-l border-gol-border pl-4">
-              Portal Interno
+              Ferramenta Interna
             </span>
           </div>
           <div className="text-xs font-bold uppercase tracking-widest text-gol-gray">
-            Termo de Quitação
+            Termo de Quitação em Milhas
           </div>
         </div>
       </header>
@@ -25,10 +25,10 @@ export default function Home() {
         {/* Title Section */}
         <div className="mb-10 text-center md:text-left">
           <h1 className="text-3xl md:text-4xl font-bold text-gol-dark mb-3">
-            Emissão de Termo de Quitação
+            Emissão de Termo de Quitação em Milhas
           </h1>
           <p className="text-gol-gray text-base max-w-2xl">
-            Preencha os dados abaixo para gerar o documento padronizado em formato .docx.
+            Preencha os dados abaixo para gerar o documento padronizado em formato PDF.
           </p>
         </div>
 

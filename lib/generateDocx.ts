@@ -20,7 +20,11 @@ export interface TermoData {
   DATA_EXTENSO: string;
 }
 
-export async function generateTermo(data: TermoData): Promise<void> {
+/**
+ * Preenche o template.docx com os dados e retorna o Blob resultante.
+ * Usado tanto para download do DOCX quanto para geração do PDF.
+ */
+export async function buildTermoBlob(data: TermoData): Promise<Blob> {
   const response = await fetch("/template.docx");
   if (!response.ok) throw new Error("Falha ao carregar o template do documento.");
 
@@ -34,11 +38,16 @@ export async function generateTermo(data: TermoData): Promise<void> {
 
   doc.render(data);
 
-  const blob = doc.getZip().generate({
+  return doc.getZip().generate({
     type: "blob",
     mimeType:
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   });
+}
+
+/** Gera e faz o download do DOCX preenchido. */
+export async function generateTermo(data: TermoData): Promise<void> {
+  const blob = await buildTermoBlob(data);
 
   const nomeArquivo = `Termo_${data.NOME_CLIENTE.replace(/\s+/g, "_")}_${data.CODIGO_LOCALIZADOR}.docx`;
   const url = URL.createObjectURL(blob);
