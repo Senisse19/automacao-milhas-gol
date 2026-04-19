@@ -174,7 +174,7 @@ export default function TermoForm() {
       };
 
       // Carrega a logo GOL como base64 para embed no HTML (sem dependência de servidor)
-      const logoResp = await fetch("/gol-logo-0.png");
+      const logoResp = await fetch("/logo.png");
       const logoBlob = await logoResp.blob();
       const logoBase64 = await new Promise<string>((resolve) => {
         const reader = new FileReader();

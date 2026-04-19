@@ -9,7 +9,7 @@ export default function Home() {
       <header className="bg-gol-white shadow-sm border-b border-gol-border sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Image src="/gol-logo-0.png" alt="GOL Logo" width={160} height={64} className="object-contain h-16 w-auto" />
+            <Image src="/logo.png" alt="GOL Logo" width={160} height={64} className="object-contain h-16 w-auto" />
             <span className="text-gol-gray text-sm font-medium ml-4 hidden sm:block border-l border-gol-border pl-4">
               Ferramenta Interna
             </span>
