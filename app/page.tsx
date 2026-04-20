@@ -28,7 +28,7 @@ export default function Home() {
             Emissão de Termo de Quitação em Milhas
           </h1>
           <p className="text-gol-gray text-base max-w-2xl">
-            Preencha os dados abaixo para gerar o documento padronizado em formato PDF.
+            Preencha os dados abaixo para gerar o documento padronizado em formato DOCX.
           </p>
         </div>
 

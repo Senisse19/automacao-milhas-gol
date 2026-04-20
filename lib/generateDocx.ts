@@ -38,9 +38,9 @@ export async function buildTermoBlob(data: TermoData): Promise<Blob> {
 
   // Cria uma cópia dos dados para normalização de tags
   // Isso garante que {NOME_CLIENTE}, {nome_cliente} e {nomecliente} funcionem
-  const normalizedData: any = { ...data };
-  Object.keys(data).forEach((key) => {
-    const val = (data as any)[key];
+  const normalizedData: Record<string, string> = { ...data };
+  (Object.keys(data) as Array<keyof TermoData>).forEach((key) => {
+    const val = data[key];
     normalizedData[key.toLowerCase()] = val;
     normalizedData[key.replace(/_/g, "")] = val;
     normalizedData[key.toLowerCase().replace(/_/g, "")] = val;
@@ -59,14 +59,27 @@ export async function buildTermoBlob(data: TermoData): Promise<Blob> {
     type: "blob",
     mimeType:
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    compression: "DEFLATE",
   });
+}
+
+/** 
+ * Remove acentos e caracteres especiais para evitar problemas no Word/Windows 
+ */
+function sanitizeFilename(name: string): string {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remove acentos
+    .replace(/[^a-zA-Z0-9._-]/g, "_"); // Substitui o que não for seguro por underscore
 }
 
 /** Gera e faz o download do DOCX preenchido. */
 export async function generateTermo(data: TermoData): Promise<void> {
   const blob = await buildTermoBlob(data);
 
-  const nomeArquivo = `Termo_${data.NOME_CLIENTE.replace(/\s+/g, "_")}_${data.CODIGO_LOCALIZADOR}.docx`;
+  const nomeLimpo = sanitizeFilename(data.NOME_CLIENTE);
+  const nomeArquivo = `Termo_${nomeLimpo}_${data.CODIGO_LOCALIZADOR}.docx`;
+  
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;

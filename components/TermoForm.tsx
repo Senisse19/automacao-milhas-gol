@@ -175,7 +175,7 @@ export default function TermoForm() {
     setSuccessMsg("");
   };
 
-  const renderInputField = (label: string, name: keyof typeof formData, placeholder = "", helperText = "", type = "text") => (
+  const renderInputField = (label: string, name: keyof typeof formData, helperText = "", type = "text") => (
     <div className="flex flex-col gap-1.5 mb-6 relative group">
       <label htmlFor={name} className="text-xs font-bold text-gol-dark uppercase tracking-wide group-focus-within:text-gol-orange transition-colors">
         {label}
@@ -186,7 +186,6 @@ export default function TermoForm() {
         type={type}
         value={formData[name]}
         onChange={handleChange}
-        placeholder={placeholder}
         style={type === "text" ? { textTransform: "uppercase" } : undefined}
         className={`bg-white border ${errors[name] ? 'border-red-500 ring-1 ring-red-500' : 'border-gol-border'} rounded-lg text-gol-dark px-4 py-3 outline-none focus:border-gol-orange focus:ring-1 focus:ring-gol-orange transition-all font-medium placeholder:text-gol-gray/50 shadow-sm`}
       />
@@ -204,20 +203,20 @@ export default function TermoForm() {
           <div className="bg-gol-orange text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">
             1
           </div>
-          <h3 className="text-xl text-gol-dark font-bold">Signatário e Caso</h3>
+          <h3 className="text-xl text-gol-dark font-bold">Signatário</h3>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-          {renderInputField("Código Localizador", "CODIGO_LOCALIZADOR", "Ex: SISBSU")}
-          {renderInputField("Relatório de Dano de Bagagem", "RELATORIO_DANO", "Ex: POAG360019")}
-          {renderInputField("Nome do Cliente (Signatário)", "NOME_CLIENTE", "")}
-          {renderInputField("CPF do Cliente", "CPF_CLIENTE", "000.000.000-00")}
+          {renderInputField("Código Localizador", "CODIGO_LOCALIZADOR")}
+          {renderInputField("Relatório de Dano de Bagagem", "RELATORIO_DANO")}
+          {renderInputField("Nome do Cliente (Signatário)", "NOME_CLIENTE")}
+          {renderInputField("CPF do Cliente", "CPF_CLIENTE")}
           <div className="md:col-span-2">
-            {renderInputField("Endereço", "ENDERECO", "")}
+            {renderInputField("Endereço", "ENDERECO")}
           </div>
-          {renderInputField("Bairro", "BAIRRO", "")}
-          {renderInputField("CEP", "CEP", "")}
-          {renderInputField("Cidade/UF", "CIDADE_UF", "")}
+          {renderInputField("Bairro", "BAIRRO")}
+          {renderInputField("CEP", "CEP")}
+          {renderInputField("Cidade/UF", "CIDADE_UF")}
         </div>
       </div>
 
@@ -238,10 +237,10 @@ export default function TermoForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-          {renderInputField("Nome do Beneficiário", "NOME_RECEBEDOR", "", "Titular da conta Smiles.")}
-          {renderInputField("Número Smiles", "NUMERO_SMILES", "")}
-          {renderInputField("Valor (Milhas)", "QUANTIDADE_MILHAS", "25.000")}
-          {renderInputField("CPF", "CPF_SMILES", "000.000.000-00")}
+          {renderInputField("Nome do Beneficiário", "NOME_RECEBEDOR", "Titular da conta Smiles.")}
+          {renderInputField("Número Smiles", "NUMERO_SMILES")}
+          {renderInputField("Valor (Milhas)", "QUANTIDADE_MILHAS")}
+          {renderInputField("CPF", "CPF_SMILES")}
         </div>
       </div>
 
@@ -264,7 +263,6 @@ export default function TermoForm() {
               onChange={(date: Date | null) => setSelectedDate(date)}
               dateFormat="dd/MM/yyyy"
               locale="pt-BR"
-              placeholderText="Selecione uma data"
               isClearable
               showMonthDropdown
               showYearDropdown
