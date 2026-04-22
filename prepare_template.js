@@ -43,9 +43,17 @@ try {
       // First, remove XML tags temporarily just to see if we can match? No, that breaks the document.
       // For a quick fix, let's just do simple replace and see if the user has a problem.
       
+      function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }
+
+      function createRobustRegex(text) {
+        return text.split('').map(char => escapeRegExp(char)).join('(<[^>]+>)*');
+      }
+
       for (const [oldVal, newVal] of Object.entries(replacements)) {
-        // This won't work if Word splits "SISBSU" into <w:t>SIS</w:t><w:t>BSU</w:t>
-        content = content.split(oldVal).join(newVal);
+        const regex = new RegExp(createRobustRegex(oldVal), 'g');
+        content = content.replace(regex, newVal);
       }
       
       zip.updateFile(zipEntry.entryName, Buffer.from(content, 'utf8'));
