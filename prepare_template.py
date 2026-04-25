@@ -18,8 +18,8 @@ replacements = {
     "AV SAO JOSE MARIA ESCRIVA 560 BLOCO 11611 CEP 22753-200": "{ENDERECO} {BAIRRO} CEP {CEP}",
     "366002033": "{NUMERO_SMILES}",
     "25.000": "{QUANTIDADE_MILHAS}",
+    "PORTO ALEGRE, 19 DE ABRIL DE 2026": "{DATA_EXTENSO}",
     "PORTO ALEGRE": "{CIDADE_UF}",
-    "19 DE ABRIL DE 2026": "{DATA_EXTENSO}",
 }
 
 def replace_in_paragraphs(paragraphs, replacements):

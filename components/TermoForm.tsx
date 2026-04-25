@@ -13,7 +13,7 @@ function dataAtualPorExtenso(isoDate?: string): string {
   const dia = dateObj.getDate();
   const mes = dateObj.toLocaleString("pt-BR", { month: "long" }).toUpperCase();
   const ano = dateObj.getFullYear();
-  return `${dia} DE ${mes} DE ${ano}`;
+  return `PORTO ALEGRE, RS, ${dia} DE ${mes} DE ${ano}.`;
 }
 
 function maskCpf(value: string): string {
